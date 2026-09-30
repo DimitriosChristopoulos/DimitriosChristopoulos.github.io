@@ -1,0 +1,18 @@
+{
+  "image": "01522v",
+  "method": "pyramid",
+  "metric": "L2",
+  "translation_format": "[y, x] shift applied to the channel to align it to B",
+  "g_translation": [
+    6,
+    2
+  ],
+  "r_translation": [
+    13,
+    1
+  ],
+  "g_loss": 15740.973063950018,
+  "r_loss": 17765.570550927994,
+  "search_bounds": null,
+  "runtime_s": 0.08
+}

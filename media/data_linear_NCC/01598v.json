@@ -1,0 +1,21 @@
+{
+  "image": "01598v",
+  "method": "linear",
+  "metric": "NCC",
+  "translation_format": "[y, x] shift applied to the channel to align it to B",
+  "g_translation": [
+    8,
+    0
+  ],
+  "r_translation": [
+    16,
+    -1
+  ],
+  "g_loss": 0.9682417941022741,
+  "r_loss": 0.9571158398132327,
+  "search_bounds": [
+    -25,
+    25
+  ],
+  "runtime_s": 0.67
+}

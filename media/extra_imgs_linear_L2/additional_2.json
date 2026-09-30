@@ -1,0 +1,21 @@
+{
+  "image": "additional_2",
+  "method": "linear",
+  "metric": "L2",
+  "translation_format": "[y, x] shift applied to the channel to align it to B",
+  "g_translation": [
+    3,
+    1
+  ],
+  "r_translation": [
+    12,
+    3
+  ],
+  "g_loss": 8063.018417441448,
+  "r_loss": 10061.387876431363,
+  "search_bounds": [
+    -25,
+    25
+  ],
+  "runtime_s": 0.54
+}
