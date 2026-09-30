@@ -33,332 +33,1209 @@
     nav ul { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; }
     nav li { margin: 4px 0; font-size: 0.95rem; }
     section { padding-top: 40px; }
-    .table-wrap { overflow-x: auto; margin: 16px 0; }
-    table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
-    th, td { text-align: left; padding: 6px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-    th { font-weight: 600; }
-    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
-    figure { margin: 0; }
-    figure img { display: block; width: 100%; height: auto; min-height: 160px; background: var(--placeholder); }
-    figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 16px; margin-top: 16px; }
+    figure { margin: 0; min-width: 0; }
+    figure img { display: block; width: 100%; height: auto; min-height: 140px; background: var(--placeholder); }
+    figcaption { margin-top: 6px; font-size: 0.85rem; }
+    .img-name { display: block; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .stats { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0 10px; color: var(--muted); }
+    .stats dt { font-weight: 400; }
+    .stats dd { margin: 0; color: var(--text); }
+    .equations { margin: 12px 0 8px; padding-left: 24px; }
+    .equations math { font-size: 1.2rem; margin: 6px 0; }
+    .eq-note { font-size: 0.9rem; color: var(--muted); margin-top: 4px; }
+    .channels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0; align-items: start; }
+    .channels figcaption { color: var(--muted); }
+    .eq-box { margin: 12px 0 16px; padding: 14px 20px; background: #f3f1ec; border-left: 3px solid var(--accent); overflow-x: auto; text-align: center; }
+    .eq-box math { font-size: 1.3rem; }
+    .kernels { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 16px 0; align-items: start; }
+    .kernels .eq-box { margin: 0; }
+    .kernels figcaption { color: var(--muted); }
+    .compare { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 16px 0; align-items: start; }
+    .compare figcaption, .single figcaption { color: var(--muted); }
+    .single { margin: 16px 0; }
+    @media (max-width: 600px) { .kernels, .compare { grid-template-columns: 1fr; } }
+    .arrow-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin: 16px 0; }
+    .arrow-pair figcaption { color: var(--muted); }
+    .arrow-pair .arrow { width: 44px; height: 22px; color: var(--accent); }
+    @media (max-width: 600px) { .arrow-pair { grid-template-columns: 1fr; justify-items: center; } .arrow-pair .arrow { transform: rotate(90deg); margin: 11px 0; } }
+    .solo { max-width: 520px; margin: 16px 0; }
+    .solo figcaption { color: var(--muted); }
+    .doc-title { font-size: 2.6rem; line-height: 1.15; margin: 0 0 4px; }
+    .part-title { font-size: 2rem; line-height: 1.2; margin: 48px 0 8px; }
+    header + .part-title { margin-top: 24px; }
     footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.9rem; font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+    @media (max-width: 700px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 600px) { nav ul { columns: 1; } }
+    @media (max-width: 420px) { .gallery { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 <main>
   <header>
-    <h1>Colorizing the Prokudin-Gorskii photo collection</h1>
+    <h1 class="doc-title">SYDE 671 - Assignment 1</h1>
+    <p class="subtitle">Dimitrios Christopoulos</p>
+  </header>
+  <h2 class="part-title">Part 1: Familiarizing Ourselves with our Camera</h2>
+
+  <!-- part1:start -->
+  <section id="part1_selfie">
+    <h2>Selfie: The Wrong Way vs. The Right Way</h2>
+    <div class="compare">
+      <figure>
+        <a href="part_1/img_close.jpg"><img src="part_1/img_close.jpg" alt="Close-up selfie" loading="lazy"></a>
+        <figcaption>Close-up, no zoom</figcaption>
+      </figure>
+      <figure>
+        <a href="part_1/img_zoom.jpg"><img src="part_1/img_zoom.jpg" alt="Selfie from farther back with zoom" loading="lazy"></a>
+        <figcaption>Stepped back and zoomed in</figcaption>
+      </figure>
+    </div>
+    <p>The photo on the left was taken at a very close distance to the person. This caused many parts of the face which were significantly closer to the camera than other to appear disproportionately large, and in general distorted. Since the entire face is very close to the camera, it warps the image since all the light rays are so close together and converging to the same point that is so close to the face already. On the right, since its further away and zoomed, the face looks much more proportional.</p>
+  </section>
+
+  <section id="part1_road">
+    <h2>Architectural Perspective Compression</h2>
+    <div class="compare">
+      <figure>
+        <a href="part_1/road_close.jpg"><img src="part_1/road_close.jpg" alt="Street photo taken up close without zoom" loading="lazy"></a>
+        <figcaption>Walked closer, no zoom</figcaption>
+      </figure>
+      <figure>
+        <a href="part_1/road_zoom.jpg"><img src="part_1/road_zoom.jpg" alt="Street photo taken from far away with zoom" loading="lazy"></a>
+        <figcaption>Farther away, zoomed in</figcaption>
+      </figure>
+    </div>
+    <p>Similarly to the first image, the main distortion caused by the difference in distance to the scene being captured can be seen in the size of wall, and even the distortion of the railing on the image on the right. The zoom from distance causes objects to look closer together and a little mixed up, making the tree look a little wider than it should, and again the railing looking really weird and distorted. The wall as well on the left appears much thinner than it does on the left.</p>
+  </section>
+
+  <section id="part1_dolly">
+    <h2>The Dolly Zoom</h2>
+    <div class="solo">
+      <figure>
+        <a href="part_1/shoe_gif.gif"><img src="part_1/shoe_gif.gif" alt="Dolly zoom animation" loading="lazy"></a>
+      </figure>
+    </div>
+    <p>This is a very interesting effect caused by playing multiple images in a row where the main object in focus is roughly the same size across the images, due to the distance and zoom changing. This makes it seem like a video where the object is staying the same-ish distance away, but the background continues to get bigger and bigger as the camera gets further away and zooms in more.</p>
+  </section>
+  <!-- part1:end -->
+
+  <header>
+    <h2 class="part-title">Part 2: Colorizing the Prokudin-Gorskii photo collection</h2>
     <p class="subtitle">SYDE671 Assignment 1, Part 2</p>
-    <p>Write a short introduction here: what the glass plate images are, and how you turn three black-and-white exposures into one color image.</p>
+    <p>The purpose of this webpage is to describe the methodology used to convert an image with 3 separate segments, each one being an individual color channel to a colored, 3-channel image. This will be done using optimization techniques, and the images will slowly be enhanced over the course of the assignment.</p>
+    <p>Firstly, an example input image is shown below. Notice that the 3 separate images are all together in ONE black and white image to start with.</p>
+    <a href="media/intro_img.png"><img src="media/intro_img.png" alt="General Input Image to Problem" loading="lazy"></a>
+    <p>The first step to transforming the image above is to separate the individual images which each represent a color channel. This can be done by simply indexing the image along the first dimension (along the height of the image). For now, there will be 3 borders, as we will be ignoring the fact that there are black, white, and grey lines separating the images. These will be dealt with in the future.</p>
+    <p>The equations below are used to find each of the vertical thresholds.</p>
+    <div class="equations">
+      <math display="block"><mrow><msub><mi>t</mi><mn>1</mn></msub><mo>=</mo><mrow><mo>&#x230A;</mo><mfrac><mi>H</mi><mn>3</mn></mfrac><mo>&#x230B;</mo></mrow></mrow></math>
+      <math display="block"><mrow><msub><mi>t</mi><mn>2</mn></msub><mo>=</mo><mn>2</mn><mrow><mo>&#x230A;</mo><mfrac><mi>H</mi><mn>3</mn></mfrac><mo>&#x230B;</mo></mrow></mrow></math>
+      <math display="block"><mrow><msub><mi>t</mi><mn>3</mn></msub><mo>=</mo><mn>3</mn><mrow><mo>&#x230A;</mo><mfrac><mi>H</mi><mn>3</mn></mfrac><mo>&#x230B;</mo></mrow></mrow></math>
+    </div>
+    <p class="eq-note">Here <i>H</i> is the height of the full image in pixels, and &#x230A;&middot;&#x230B; rounds down (the code uses <code>int()</code>). The three thresholds are the row indices where each channel ends.</p>
+    <p>After cropping, we are left with 3 variables, each representing one of the following images. It's important to keep track of which variable corresponds to which color channel. In the original image, the blue color channel was on top, green was in the middle, and red was on the bottom. This will stay constant throughout the assignment. The 3 separated images are shown below.</p>
+    <div class="channels">
+      <figure>
+        <a href="media/top_img.png"><img src="media/top_img.png" alt="Blue Color Channel" loading="lazy"></a>
+        <figcaption>Blue channel (top third)</figcaption>
+      </figure>
+      <figure>
+        <a href="media/mid_img.png"><img src="media/mid_img.png" alt="Green Color Channel" loading="lazy"></a>
+        <figcaption>Green channel (middle third)</figcaption>
+      </figure>
+      <figure>
+        <a href="media/bottom_img.png"><img src="media/bottom_img.png" alt="Red Color Channel" loading="lazy"></a>
+        <figcaption>Red channel (bottom third)</figcaption>
+      </figure>
+    </div>
   </header>
 
   <nav aria-label="Sections">
     <ul>
-      <li><a href="#data_linear_L2">Single-scale alignment with L2: provided images</a></li>
-      <li><a href="#data_linear_NCC">Single-scale alignment with NCC: provided images</a></li>
-      <li><a href="#data_pyramid_L2">Multi-scale pyramid alignment with L2: provided images</a></li>
-      <li><a href="#data_pyramid_NCC">Multi-scale pyramid alignment with NCC: provided images</a></li>
-      <li><a href="#extra_imgs_linear_L2">Single-scale alignment with L2: additional images</a></li>
-      <li><a href="#extra_imgs_linear_NCC">Single-scale alignment with NCC: additional images</a></li>
-      <li><a href="#extra_imgs_pyramid_L2">Multi-scale pyramid alignment with L2: additional images</a></li>
-      <li><a href="#extra_imgs_pyramid_NCC">Multi-scale pyramid alignment with NCC: additional images</a></li>
+      <li><a href="#data_linear_L2">Linear Alignment with L2: Provided Images</a></li>
+      <li><a href="#data_linear_NCC">Linear Alignment with NCC: Provided Images</a></li>
+      <li><a href="#data_pyramid_L2">Image Pyramid Implementation with L2: Provided Images</a></li>
+      <li><a href="#data_pyramid_NCC">Image Pyramid Implementation with NCC: Provided Images</a></li>
+      <li><a href="#extra_imgs_linear_L2">Linear Alignment with L2: Additional Images</a></li>
+      <li><a href="#extra_imgs_linear_NCC">Linear Alignment with NCC: Additional Images</a></li>
+      <li><a href="#extra_imgs_pyramid_L2">Image Pyramid Implementation with L2: Additional Images</a></li>
+      <li><a href="#extra_imgs_pyramid_NCC">Image Pyramid Implementation with NCC: Additional Images</a></li>
+      <li><a href="#canny">Border Detection with Canny Edges</a></li>
+      <li><a href="#contrast">Contrast Stretching</a></li>
+      <li><a href="#white_balance">White Balance</a></li>
+      <li><a href="#saturation">Saturation Boosting</a></li>
+      <li><a href="#cropping">Cropping the Edge Artifacts</a></li>
     </ul>
   </nav>
 
   <section id="data_linear_L2">
-    <h2>Single-scale alignment with L2: provided images</h2>
-    <p>Describe what this run does and what to look for in the results. Note any images that failed or were skipped, and why.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>G offset (y, x)</th>
-            <th>R offset (y, x)</th>
-            <th>G loss</th>
-            <th>R loss</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IMAGE_NAME</td>
-            <td>y, x</td>
-            <td>y, x</td>
-            <td>0.0</td>
-            <td>0.0</td>
-          </tr>
-          <!-- copy the row above for each image -->
-        </tbody>
-      </table>
+    <p>The first step of implementing proper alignment was to use a simple linear algorithm that 'maps' a point in either the G or R channel to a corresponding one in the B channel, and using some sort of loss function to determine the difference in the intensity values between the 2 pixels. Using simple for loops, we can iterate from a lower bound to an upper bound for both the x and y dimensions. Shown below is a simple equation for mapping from a G or R channel to B given a x_offset and y_offset.</p>
+    <div class="eq-box">
+      <math display="block"><mrow><mi>G</mi><mo>[</mo><mi>y</mi><mo>,</mo><mi>x</mi><mo>]</mo><mo>&#x2192;</mo><mi>B</mi><mo>[</mo><mi>y</mi><mo>+</mo><msub><mi>y</mi><mtext>offset</mtext></msub><mo>,</mo><mi>x</mi><mo>+</mo><msub><mi>x</mi><mtext>offset</mtext></msub><mo>]</mo></mrow></math>
     </div>
+    <h2>Linear Alignment with L2: Provided Images</h2>
+    <p>Right now we have 2 main options for loss functions. The first one used here is L2 normalization, with the equation for it shown below.</p>
+    <div class="eq-box">
+      <math display="block"><mrow><msub><mi>L</mi><mn>2</mn></msub><mo>(</mo><msub><mi>I</mi><mn>1</mn></msub><mo>,</mo><msub><mi>I</mi><mn>2</mn></msub><mo>)</mo><mo>=</mo><msqrt><munder><mo movablelimits="false">&#x2211;</mo><mrow><msub><mi>y</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub></mrow></munder><msup><mrow><mo>(</mo><msub><mi>I</mi><mn>1</mn></msub><mo>[</mo><msub><mi>y</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>]</mo><mo>&#x2212;</mo><msub><mi>I</mi><mn>2</mn></msub><mo>[</mo><msub><mi>y</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>]</mo><mo>)</mo></mrow><mn>2</mn></msup></msqrt></mrow></math>
+    </div>
+    <p class="eq-note">Here <i>I</i><sub>1</sub> and <i>I</i><sub>2</sub> are the two image windows being compared, (<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>) and (<i>x</i><sub>2</sub>, <i>y</i><sub>2</sub>) are corresponding pixel positions in the two windows, and the sum runs over every pixel in the window. Lower is better.</p>
+    <p>Shown below are the overlapping images made by optimizing for the loss function between the G->B channels, and the R->B channels. The final resulting image is of shape [height, width, 3], as now our image has 3 color channels.</p>
 
     <div class="gallery">
       <figure>
-        <a href="media/data_linear_L2/IMAGE_NAME.jpg"><img src="media/data_linear_L2/IMAGE_NAME.jpg" alt="IMAGE_NAME aligned with linear search using L2" loading="lazy"></a>
-        <figcaption>IMAGE_NAME</figcaption>
+        <a href="media/data_linear_L2/00056v.jpg"><img src="media/data_linear_L2/00056v.jpg" alt="00056v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00056v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 1</dd>
+            <dt>R offset (y, x)</dt><dd>13, 1</dd>
+            <dt>G loss</dt><dd>12,911.4</dd>
+            <dt>R loss</dt><dd>14,396.6</dd>
+          </dl>
+        </figcaption>
       </figure>
-      <!-- copy the figure above for each image -->
+      <figure>
+        <a href="media/data_linear_L2/00125v.jpg"><img src="media/data_linear_L2/00125v.jpg" alt="00125v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00125v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>5, 2</dd>
+            <dt>R offset (y, x)</dt><dd>10, 1</dd>
+            <dt>G loss</dt><dd>9,809.0</dd>
+            <dt>R loss</dt><dd>15,377.8</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/00163v.jpg"><img src="media/data_linear_L2/00163v.jpg" alt="00163v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00163v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>-3, 1</dd>
+            <dt>R offset (y, x)</dt><dd>-4, 1</dd>
+            <dt>G loss</dt><dd>7,978.0</dd>
+            <dt>R loss</dt><dd>8,327.0</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/00804v.jpg"><img src="media/data_linear_L2/00804v.jpg" alt="00804v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00804v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, -2</dd>
+            <dt>R offset (y, x)</dt><dd>13, -4</dd>
+            <dt>G loss</dt><dd>9,911.0</dd>
+            <dt>R loss</dt><dd>13,108.4</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/01164v.jpg"><img src="media/data_linear_L2/01164v.jpg" alt="01164v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01164v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>11, 3</dd>
+            <dt>G loss</dt><dd>7,147.0</dd>
+            <dt>R loss</dt><dd>11,815.8</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/01269v.jpg"><img src="media/data_linear_L2/01269v.jpg" alt="01269v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01269v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>14, 3</dd>
+            <dt>G loss</dt><dd>17,049.7</dd>
+            <dt>R loss</dt><dd>27,719.0</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/01522v.jpg"><img src="media/data_linear_L2/01522v.jpg" alt="01522v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01522v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>13, 1</dd>
+            <dt>G loss</dt><dd>15,741.0</dd>
+            <dt>R loss</dt><dd>17,765.6</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/01597v.jpg"><img src="media/data_linear_L2/01597v.jpg" alt="01597v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01597v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>7, 1</dd>
+            <dt>R offset (y, x)</dt><dd>16, 1</dd>
+            <dt>G loss</dt><dd>10,331.7</dd>
+            <dt>R loss</dt><dd>13,714.9</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/01598v.jpg"><img src="media/data_linear_L2/01598v.jpg" alt="01598v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01598v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 0</dd>
+            <dt>R offset (y, x)</dt><dd>16, -1</dd>
+            <dt>G loss</dt><dd>8,480.7</dd>
+            <dt>R loss</dt><dd>15,045.2</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/01728v.jpg"><img src="media/data_linear_L2/01728v.jpg" alt="01728v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01728v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 1</dd>
+            <dt>R offset (y, x)</dt><dd>18, 1</dd>
+            <dt>G loss</dt><dd>7,893.7</dd>
+            <dt>R loss</dt><dd>12,987.6</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/10131v.jpg"><img src="media/data_linear_L2/10131v.jpg" alt="10131v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">10131v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>12, 3</dd>
+            <dt>G loss</dt><dd>11,933.8</dd>
+            <dt>R loss</dt><dd>18,938.1</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_L2/31421v.jpg"><img src="media/data_linear_L2/31421v.jpg" alt="31421v aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">31421v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 0</dd>
+            <dt>R offset (y, x)</dt><dd>13, 0</dd>
+            <dt>G loss</dt><dd>9,571.4</dd>
+            <dt>R loss</dt><dd>10,977.1</dd>
+          </dl>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
   <section id="data_linear_NCC">
-    <h2>Single-scale alignment with NCC: provided images</h2>
-    <p>Describe what this run does and what to look for in the results. Note any images that failed or were skipped, and why.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>G offset (y, x)</th>
-            <th>R offset (y, x)</th>
-            <th>G loss</th>
-            <th>R loss</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IMAGE_NAME</td>
-            <td>y, x</td>
-            <td>y, x</td>
-            <td>0.0</td>
-            <td>0.0</td>
-          </tr>
-          <!-- copy the row above for each image -->
-        </tbody>
-      </table>
+    <h2>Linear Alignment with NCC: Provided Images</h2>
+    <p>The second loss function is normalized cross-correlation (NCC). Instead of measuring the difference between the two windows, it measures how similar they are: each window is divided by its own norm, and the dot product of the two normalized windows is taken, as shown below.</p>
+    <div class="eq-box">
+      <math display="block"><mrow><mi>NCC</mi><mo>(</mo><msub><mi>I</mi><mn>1</mn></msub><mo>,</mo><msub><mi>I</mi><mn>2</mn></msub><mo>)</mo><mo>=</mo><munder><mo movablelimits="false">&#x2211;</mo><mrow><mi>y</mi><mo>,</mo><mi>x</mi></mrow></munder><mrow><mo>(</mo><mfrac><mrow><msub><mi>I</mi><mn>1</mn></msub><mo>[</mo><mi>y</mi><mo>,</mo><mi>x</mi><mo>]</mo></mrow><mrow><mo>&#x2016;</mo><msub><mi>I</mi><mn>1</mn></msub><mo>&#x2016;</mo></mrow></mfrac><mo>)</mo></mrow><mrow><mo>(</mo><mfrac><mrow><msub><mi>I</mi><mn>2</mn></msub><mo>[</mo><mi>y</mi><mo>,</mo><mi>x</mi><mo>]</mo></mrow><mrow><mo>&#x2016;</mo><msub><mi>I</mi><mn>2</mn></msub><mo>&#x2016;</mo></mrow></mfrac><mo>)</mo></mrow></mrow></math>
     </div>
+    <p class="eq-note">Here &#x2016;<i>I</i>&#x2016; is the square root of the sum of the squared pixel values in a window.</p>
+    <p>Because NCC is a similarity score rather than an error, the best offset is the one that maximizes it, and a value closer to 1 means a better match. Dividing by the norms also makes the score insensitive to overall scale differences between the color channels, which helps because the three plates were exposed through different filters. Shown below are the overlapping images made by optimizing NCC between the G->B channels and the R->B channels. The loss values listed under each image are the best NCC scores found.</p>
 
     <div class="gallery">
       <figure>
-        <a href="media/data_linear_NCC/IMAGE_NAME.jpg"><img src="media/data_linear_NCC/IMAGE_NAME.jpg" alt="IMAGE_NAME aligned with linear search using NCC" loading="lazy"></a>
-        <figcaption>IMAGE_NAME</figcaption>
+        <a href="media/data_linear_NCC/00056v.jpg"><img src="media/data_linear_NCC/00056v.jpg" alt="00056v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00056v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>5, 1</dd>
+            <dt>R offset (y, x)</dt><dd>13, 1</dd>
+            <dt>G loss</dt><dd>0.9523</dd>
+            <dt>R loss</dt><dd>0.9374</dd>
+          </dl>
+        </figcaption>
       </figure>
-      <!-- copy the figure above for each image -->
+      <figure>
+        <a href="media/data_linear_NCC/00125v.jpg"><img src="media/data_linear_NCC/00125v.jpg" alt="00125v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00125v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>5, 2</dd>
+            <dt>R offset (y, x)</dt><dd>9, 1</dd>
+            <dt>G loss</dt><dd>0.9734</dd>
+            <dt>R loss</dt><dd>0.9415</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/00163v.jpg"><img src="media/data_linear_NCC/00163v.jpg" alt="00163v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00163v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>-3, 1</dd>
+            <dt>R offset (y, x)</dt><dd>-4, 1</dd>
+            <dt>G loss</dt><dd>0.9777</dd>
+            <dt>R loss</dt><dd>0.9759</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/00804v.jpg"><img src="media/data_linear_NCC/00804v.jpg" alt="00804v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00804v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, -2</dd>
+            <dt>R offset (y, x)</dt><dd>13, -4</dd>
+            <dt>G loss</dt><dd>0.9807</dd>
+            <dt>R loss</dt><dd>0.9600</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/01164v.jpg"><img src="media/data_linear_NCC/01164v.jpg" alt="01164v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01164v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>11, 3</dd>
+            <dt>G loss</dt><dd>0.9881</dd>
+            <dt>R loss</dt><dd>0.9737</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/01269v.jpg"><img src="media/data_linear_NCC/01269v.jpg" alt="01269v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01269v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>14, 3</dd>
+            <dt>G loss</dt><dd>0.9713</dd>
+            <dt>R loss</dt><dd>0.9477</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/01522v.jpg"><img src="media/data_linear_NCC/01522v.jpg" alt="01522v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01522v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>13, 1</dd>
+            <dt>G loss</dt><dd>0.9519</dd>
+            <dt>R loss</dt><dd>0.9488</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/01597v.jpg"><img src="media/data_linear_NCC/01597v.jpg" alt="01597v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01597v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>7, 1</dd>
+            <dt>R offset (y, x)</dt><dd>16, 1</dd>
+            <dt>G loss</dt><dd>0.9770</dd>
+            <dt>R loss</dt><dd>0.9651</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/01598v.jpg"><img src="media/data_linear_NCC/01598v.jpg" alt="01598v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01598v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 0</dd>
+            <dt>R offset (y, x)</dt><dd>16, -1</dd>
+            <dt>G loss</dt><dd>0.9682</dd>
+            <dt>R loss</dt><dd>0.9571</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/01728v.jpg"><img src="media/data_linear_NCC/01728v.jpg" alt="01728v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01728v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 1</dd>
+            <dt>R offset (y, x)</dt><dd>18, 1</dd>
+            <dt>G loss</dt><dd>0.9820</dd>
+            <dt>R loss</dt><dd>0.9719</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/10131v.jpg"><img src="media/data_linear_NCC/10131v.jpg" alt="10131v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">10131v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>12, 3</dd>
+            <dt>G loss</dt><dd>0.9890</dd>
+            <dt>R loss</dt><dd>0.9779</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_linear_NCC/31421v.jpg"><img src="media/data_linear_NCC/31421v.jpg" alt="31421v aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">31421v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 0</dd>
+            <dt>R offset (y, x)</dt><dd>13, 0</dd>
+            <dt>G loss</dt><dd>0.9967</dd>
+            <dt>R loss</dt><dd>0.9888</dd>
+          </dl>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
   <section id="data_pyramid_L2">
-    <h2>Multi-scale pyramid alignment with L2: provided images</h2>
-    <p>Describe what this run does and what to look for in the results. Note any images that failed or were skipped, and why.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>G offset (y, x)</th>
-            <th>R offset (y, x)</th>
-            <th>G loss</th>
-            <th>R loss</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IMAGE_NAME</td>
-            <td>y, x</td>
-            <td>y, x</td>
-            <td>0.0</td>
-            <td>0.0</td>
-          </tr>
-          <!-- copy the row above for each image -->
-        </tbody>
-      </table>
+    <h2>Image Pyramid Implementation with L2: Provided Images</h2>
+    <p>The next step is to increase the complexity of our mapping process. We want to blur, and then downsample the image so that we can more freely explore the domain, which right now for bigger JPEG images is very computationally expensive. The solution to this is to downsample the image, so that with the same x and y offset values, we can reach exponentially further throughout the image. First, we blur the image, and then downsample, taking every other point. If the smaller of the 2 dimensions is not less than 200, we keep downsampling the image. Since we keep doing the same thing over and over again, we are able to make this a recursive call.</p>
+    <p>Once we have downsampled enough to where one of the dimensions of the image has gotten to 200 pixels or less, we can start exploring the offset. We optimize the loss function as much as we can just like before, and pass these optimal offsets to the next call in the stack. For the next call in the stack, this optimal solution is the starting point. This allows for big leaps in offset values in coarser images (the ones downsampled the most), and fine-tuning adjustments as the image is upsampled back up.</p>
+    <p>Once again there is a choice between L2 and NCC, both are shown below here but they largely provide the same solution, or at least are sufficiently similar.</p>
+    <div class="kernels">
+      <figure>
+        <div class="eq-box">
+          <math display="block"><mrow><msub><mi>k</mi><mtext>col</mtext></msub><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>4</mn></mrow></mfrac><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></mrow></math>
+        </div>
+        <figcaption>Column vector. It slides down every column and replaces each pixel with a weighted average of itself (weight 2) and the pixels directly above and below it (weight 1 each), which blurs the image vertically. The factor of 1/4 makes the weights add up to 1, so the overall brightness does not change.</figcaption>
+      </figure>
+      <figure>
+        <div class="eq-box">
+          <math display="block"><mrow><msub><mi>k</mi><mtext>row</mtext></msub><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>4</mn></mrow></mfrac><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></mrow></math>
+        </div>
+        <figcaption>Row vector. The same weighting applied along every row, using the pixels to the left and right, which blurs the image horizontally. Applying the column vector and then the row vector gives a full 2D blur from two cheap 1D passes. The blur is applied before every downsampling step so that fine detail does not alias.</figcaption>
+      </figure>
     </div>
 
     <div class="gallery">
       <figure>
-        <a href="media/data_pyramid_L2/IMAGE_NAME.jpg"><img src="media/data_pyramid_L2/IMAGE_NAME.jpg" alt="IMAGE_NAME aligned with pyramid search using L2" loading="lazy"></a>
-        <figcaption>IMAGE_NAME</figcaption>
+        <a href="media/data_pyramid_L2/00056v.jpg"><img src="media/data_pyramid_L2/00056v.jpg" alt="00056v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00056v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 1</dd>
+            <dt>R offset (y, x)</dt><dd>13, 1</dd>
+            <dt>G loss</dt><dd>12,911.4</dd>
+            <dt>R loss</dt><dd>14,396.6</dd>
+          </dl>
+        </figcaption>
       </figure>
-      <!-- copy the figure above for each image -->
+      <figure>
+        <a href="media/data_pyramid_L2/00125v.jpg"><img src="media/data_pyramid_L2/00125v.jpg" alt="00125v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00125v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>5, 2</dd>
+            <dt>R offset (y, x)</dt><dd>10, 1</dd>
+            <dt>G loss</dt><dd>9,809.0</dd>
+            <dt>R loss</dt><dd>15,377.8</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/00163v.jpg"><img src="media/data_pyramid_L2/00163v.jpg" alt="00163v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00163v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>-3, 1</dd>
+            <dt>R offset (y, x)</dt><dd>-4, 1</dd>
+            <dt>G loss</dt><dd>7,978.0</dd>
+            <dt>R loss</dt><dd>8,327.0</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/00458u.jpg"><img src="media/data_pyramid_L2/00458u.jpg" alt="00458u aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00458u</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>43, 6</dd>
+            <dt>R offset (y, x)</dt><dd>87, 32</dd>
+            <dt>G loss</dt><dd>85,220.8</dd>
+            <dt>R loss</dt><dd>95,589.8</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/00804v.jpg"><img src="media/data_pyramid_L2/00804v.jpg" alt="00804v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00804v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, -2</dd>
+            <dt>R offset (y, x)</dt><dd>13, -4</dd>
+            <dt>G loss</dt><dd>9,911.0</dd>
+            <dt>R loss</dt><dd>13,108.4</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01007a.jpg"><img src="media/data_pyramid_L2/01007a.jpg" alt="01007a aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01007a</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>60, 14</dd>
+            <dt>R offset (y, x)</dt><dd>129, 13</dd>
+            <dt>G loss</dt><dd>76,140.3</dd>
+            <dt>R loss</dt><dd>159,691.4</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01047u.jpg"><img src="media/data_pyramid_L2/01047u.jpg" alt="01047u aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01047u</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>24, 20</dd>
+            <dt>R offset (y, x)</dt><dd>71, 33</dd>
+            <dt>G loss</dt><dd>71,300.7</dd>
+            <dt>R loss</dt><dd>94,363.3</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01164v.jpg"><img src="media/data_pyramid_L2/01164v.jpg" alt="01164v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01164v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>11, 3</dd>
+            <dt>G loss</dt><dd>7,147.0</dd>
+            <dt>R loss</dt><dd>11,815.8</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01269v.jpg"><img src="media/data_pyramid_L2/01269v.jpg" alt="01269v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01269v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>14, 3</dd>
+            <dt>G loss</dt><dd>17,049.7</dd>
+            <dt>R loss</dt><dd>27,719.0</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01522v.jpg"><img src="media/data_pyramid_L2/01522v.jpg" alt="01522v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01522v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>13, 1</dd>
+            <dt>G loss</dt><dd>15,741.0</dd>
+            <dt>R loss</dt><dd>17,765.6</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01597v.jpg"><img src="media/data_pyramid_L2/01597v.jpg" alt="01597v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01597v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>7, 1</dd>
+            <dt>R offset (y, x)</dt><dd>16, 1</dd>
+            <dt>G loss</dt><dd>10,331.7</dd>
+            <dt>R loss</dt><dd>13,714.9</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01598v.jpg"><img src="media/data_pyramid_L2/01598v.jpg" alt="01598v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01598v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 0</dd>
+            <dt>R offset (y, x)</dt><dd>16, -1</dd>
+            <dt>G loss</dt><dd>8,480.7</dd>
+            <dt>R loss</dt><dd>15,045.2</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01657u.jpg"><img src="media/data_pyramid_L2/01657u.jpg" alt="01657u aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01657u</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>55, 9</dd>
+            <dt>R offset (y, x)</dt><dd>115, 11</dd>
+            <dt>G loss</dt><dd>69,929.4</dd>
+            <dt>R loss</dt><dd>96,047.8</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01725u.jpg"><img src="media/data_pyramid_L2/01725u.jpg" alt="01725u aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01725u</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>77, 44</dd>
+            <dt>R offset (y, x)</dt><dd>537, 89</dd>
+            <dt>G loss</dt><dd>66,433.7</dd>
+            <dt>R loss</dt><dd>149,656.1</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01728v.jpg"><img src="media/data_pyramid_L2/01728v.jpg" alt="01728v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01728v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 1</dd>
+            <dt>R offset (y, x)</dt><dd>18, 1</dd>
+            <dt>G loss</dt><dd>7,893.7</dd>
+            <dt>R loss</dt><dd>12,987.6</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/01861a.jpg"><img src="media/data_pyramid_L2/01861a.jpg" alt="01861a aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01861a</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>71, 38</dd>
+            <dt>R offset (y, x)</dt><dd>148, 62</dd>
+            <dt>G loss</dt><dd>86,829.7</dd>
+            <dt>R loss</dt><dd>135,624.7</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/10131v.jpg"><img src="media/data_pyramid_L2/10131v.jpg" alt="10131v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">10131v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>12, 3</dd>
+            <dt>G loss</dt><dd>11,933.8</dd>
+            <dt>R loss</dt><dd>18,938.1</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_L2/31421v.jpg"><img src="media/data_pyramid_L2/31421v.jpg" alt="31421v aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">31421v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 0</dd>
+            <dt>R offset (y, x)</dt><dd>13, 0</dd>
+            <dt>G loss</dt><dd>9,571.4</dd>
+            <dt>R loss</dt><dd>10,977.1</dd>
+          </dl>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
   <section id="data_pyramid_NCC">
-    <h2>Multi-scale pyramid alignment with NCC: provided images</h2>
-    <p>Describe what this run does and what to look for in the results. Note any images that failed or were skipped, and why.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>G offset (y, x)</th>
-            <th>R offset (y, x)</th>
-            <th>G loss</th>
-            <th>R loss</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IMAGE_NAME</td>
-            <td>y, x</td>
-            <td>y, x</td>
-            <td>0.0</td>
-            <td>0.0</td>
-          </tr>
-          <!-- copy the row above for each image -->
-        </tbody>
-      </table>
-    </div>
+    <h2>Image Pyramid Implementation with NCC: Provided Images</h2>
+    <p>This section is largely the same as the above. The main thing to notice with the image pyramid implementation is that 1. it is able to handle much larger JPEGs due to it being much more computationally efficient, and 2. It is able to more accurately align the images due to the coarse (at first) adjustments when the image is downsampled alot, and the finer (later) adjustments made as it is upsampled back up.</p>
 
     <div class="gallery">
       <figure>
-        <a href="media/data_pyramid_NCC/IMAGE_NAME.jpg"><img src="media/data_pyramid_NCC/IMAGE_NAME.jpg" alt="IMAGE_NAME aligned with pyramid search using NCC" loading="lazy"></a>
-        <figcaption>IMAGE_NAME</figcaption>
+        <a href="media/data_pyramid_NCC/00056v.jpg"><img src="media/data_pyramid_NCC/00056v.jpg" alt="00056v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00056v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>5, 1</dd>
+            <dt>R offset (y, x)</dt><dd>13, 1</dd>
+            <dt>G loss</dt><dd>0.9523</dd>
+            <dt>R loss</dt><dd>0.9374</dd>
+          </dl>
+        </figcaption>
       </figure>
-      <!-- copy the figure above for each image -->
+      <figure>
+        <a href="media/data_pyramid_NCC/00125v.jpg"><img src="media/data_pyramid_NCC/00125v.jpg" alt="00125v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00125v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>5, 2</dd>
+            <dt>R offset (y, x)</dt><dd>9, 1</dd>
+            <dt>G loss</dt><dd>0.9734</dd>
+            <dt>R loss</dt><dd>0.9415</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/00163v.jpg"><img src="media/data_pyramid_NCC/00163v.jpg" alt="00163v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00163v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>-3, 1</dd>
+            <dt>R offset (y, x)</dt><dd>-4, 1</dd>
+            <dt>G loss</dt><dd>0.9777</dd>
+            <dt>R loss</dt><dd>0.9759</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/00458u.jpg"><img src="media/data_pyramid_NCC/00458u.jpg" alt="00458u aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00458u</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>43, 6</dd>
+            <dt>R offset (y, x)</dt><dd>87, 32</dd>
+            <dt>G loss</dt><dd>0.9834</dd>
+            <dt>R loss</dt><dd>0.9790</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/00804v.jpg"><img src="media/data_pyramid_NCC/00804v.jpg" alt="00804v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">00804v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, -2</dd>
+            <dt>R offset (y, x)</dt><dd>13, -4</dd>
+            <dt>G loss</dt><dd>0.9807</dd>
+            <dt>R loss</dt><dd>0.9600</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01007a.jpg"><img src="media/data_pyramid_NCC/01007a.jpg" alt="01007a aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01007a</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>60, 14</dd>
+            <dt>R offset (y, x)</dt><dd>129, 13</dd>
+            <dt>G loss</dt><dd>0.9853</dd>
+            <dt>R loss</dt><dd>0.9476</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01047u.jpg"><img src="media/data_pyramid_NCC/01047u.jpg" alt="01047u aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01047u</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>24, 20</dd>
+            <dt>R offset (y, x)</dt><dd>71, 33</dd>
+            <dt>G loss</dt><dd>0.9729</dd>
+            <dt>R loss</dt><dd>0.9741</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01164v.jpg"><img src="media/data_pyramid_NCC/01164v.jpg" alt="01164v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01164v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>11, 3</dd>
+            <dt>G loss</dt><dd>0.9881</dd>
+            <dt>R loss</dt><dd>0.9737</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01269v.jpg"><img src="media/data_pyramid_NCC/01269v.jpg" alt="01269v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01269v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>14, 3</dd>
+            <dt>G loss</dt><dd>0.9713</dd>
+            <dt>R loss</dt><dd>0.9477</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01522v.jpg"><img src="media/data_pyramid_NCC/01522v.jpg" alt="01522v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01522v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>13, 1</dd>
+            <dt>G loss</dt><dd>0.9519</dd>
+            <dt>R loss</dt><dd>0.9488</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01597v.jpg"><img src="media/data_pyramid_NCC/01597v.jpg" alt="01597v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01597v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>7, 1</dd>
+            <dt>R offset (y, x)</dt><dd>16, 1</dd>
+            <dt>G loss</dt><dd>0.9770</dd>
+            <dt>R loss</dt><dd>0.9651</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01598v.jpg"><img src="media/data_pyramid_NCC/01598v.jpg" alt="01598v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01598v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 0</dd>
+            <dt>R offset (y, x)</dt><dd>16, -1</dd>
+            <dt>G loss</dt><dd>0.9682</dd>
+            <dt>R loss</dt><dd>0.9571</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01657u.jpg"><img src="media/data_pyramid_NCC/01657u.jpg" alt="01657u aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01657u</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>55, 9</dd>
+            <dt>R offset (y, x)</dt><dd>116, 12</dd>
+            <dt>G loss</dt><dd>0.9860</dd>
+            <dt>R loss</dt><dd>0.9751</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01725u.jpg"><img src="media/data_pyramid_NCC/01725u.jpg" alt="01725u aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01725u</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>77, 44</dd>
+            <dt>R offset (y, x)</dt><dd>162, 77</dd>
+            <dt>G loss</dt><dd>0.9668</dd>
+            <dt>R loss</dt><dd>0.9496</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01728v.jpg"><img src="media/data_pyramid_NCC/01728v.jpg" alt="01728v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01728v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 1</dd>
+            <dt>R offset (y, x)</dt><dd>18, 1</dd>
+            <dt>G loss</dt><dd>0.9820</dd>
+            <dt>R loss</dt><dd>0.9719</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/01861a.jpg"><img src="media/data_pyramid_NCC/01861a.jpg" alt="01861a aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">01861a</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>71, 39</dd>
+            <dt>R offset (y, x)</dt><dd>148, 63</dd>
+            <dt>G loss</dt><dd>0.9870</dd>
+            <dt>R loss</dt><dd>0.9777</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/10131v.jpg"><img src="media/data_pyramid_NCC/10131v.jpg" alt="10131v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">10131v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 2</dd>
+            <dt>R offset (y, x)</dt><dd>12, 3</dd>
+            <dt>G loss</dt><dd>0.9890</dd>
+            <dt>R loss</dt><dd>0.9779</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/data_pyramid_NCC/31421v.jpg"><img src="media/data_pyramid_NCC/31421v.jpg" alt="31421v aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">31421v</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>8, 0</dd>
+            <dt>R offset (y, x)</dt><dd>13, 0</dd>
+            <dt>G loss</dt><dd>0.9967</dd>
+            <dt>R loss</dt><dd>0.9888</dd>
+          </dl>
+        </figcaption>
+      </figure>
     </div>
+    <p>One thing to note so far is that not all images are coming out perfectly aligned, for example the optimization algorithm still somewhat struggles with 00056v (mainly due to artifacts in the image), and 01269v due to the shear complexity of the image. However, it is still a massive improvement over the linear method, and much faster.</p>
   </section>
 
   <section id="extra_imgs_linear_L2">
-    <h2>Single-scale alignment with L2: additional images</h2>
-    <p>Describe what this run does and what to look for in the results. Note any images that failed or were skipped, and why.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>G offset (y, x)</th>
-            <th>R offset (y, x)</th>
-            <th>G loss</th>
-            <th>R loss</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IMAGE_NAME</td>
-            <td>y, x</td>
-            <td>y, x</td>
-            <td>0.0</td>
-            <td>0.0</td>
-          </tr>
-          <!-- copy the row above for each image -->
-        </tbody>
-      </table>
-    </div>
+    <h2>Linear Alignment with L2: Additional Images</h2>
+    <p>Same process as previous sections, jsut with some more handpicked, challenging images (these images are also much higher resolution). As we can see below the algorithm is still performing well, but there is room for improvement, mainly touch-ups which will be talked about soon.</p>
 
     <div class="gallery">
       <figure>
-        <a href="media/extra_imgs_linear_L2/IMAGE_NAME.jpg"><img src="media/extra_imgs_linear_L2/IMAGE_NAME.jpg" alt="IMAGE_NAME aligned with linear search using L2" loading="lazy"></a>
-        <figcaption>IMAGE_NAME</figcaption>
+        <a href="media/extra_imgs_linear_L2/additional_1.jpg"><img src="media/extra_imgs_linear_L2/additional_1.jpg" alt="additional_1 aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_1</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>2, -1</dd>
+            <dt>R offset (y, x)</dt><dd>10, -2</dd>
+            <dt>G loss</dt><dd>9,287.7</dd>
+            <dt>R loss</dt><dd>14,550.5</dd>
+          </dl>
+        </figcaption>
       </figure>
-      <!-- copy the figure above for each image -->
+      <figure>
+        <a href="media/extra_imgs_linear_L2/additional_2.jpg"><img src="media/extra_imgs_linear_L2/additional_2.jpg" alt="additional_2 aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_2</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>3, 1</dd>
+            <dt>R offset (y, x)</dt><dd>12, 3</dd>
+            <dt>G loss</dt><dd>8,063.0</dd>
+            <dt>R loss</dt><dd>10,061.4</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/extra_imgs_linear_L2/additional_3.jpg"><img src="media/extra_imgs_linear_L2/additional_3.jpg" alt="additional_3 aligned with linear search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_3</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 0</dd>
+            <dt>R offset (y, x)</dt><dd>17, -1</dd>
+            <dt>G loss</dt><dd>12,846.7</dd>
+            <dt>R loss</dt><dd>13,921.4</dd>
+          </dl>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
   <section id="extra_imgs_linear_NCC">
-    <h2>Single-scale alignment with NCC: additional images</h2>
-    <p>Describe what this run does and what to look for in the results. Note any images that failed or were skipped, and why.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>G offset (y, x)</th>
-            <th>R offset (y, x)</th>
-            <th>G loss</th>
-            <th>R loss</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IMAGE_NAME</td>
-            <td>y, x</td>
-            <td>y, x</td>
-            <td>0.0</td>
-            <td>0.0</td>
-          </tr>
-          <!-- copy the row above for each image -->
-        </tbody>
-      </table>
-    </div>
+    <h2>Linear Alignment with NCC: Additional Images</h2>
+    <p></p>
 
     <div class="gallery">
       <figure>
-        <a href="media/extra_imgs_linear_NCC/IMAGE_NAME.jpg"><img src="media/extra_imgs_linear_NCC/IMAGE_NAME.jpg" alt="IMAGE_NAME aligned with linear search using NCC" loading="lazy"></a>
-        <figcaption>IMAGE_NAME</figcaption>
+        <a href="media/extra_imgs_linear_NCC/additional_1.jpg"><img src="media/extra_imgs_linear_NCC/additional_1.jpg" alt="additional_1 aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_1</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>2, -1</dd>
+            <dt>R offset (y, x)</dt><dd>10, -2</dd>
+            <dt>G loss</dt><dd>0.9890</dd>
+            <dt>R loss</dt><dd>0.9766</dd>
+          </dl>
+        </figcaption>
       </figure>
-      <!-- copy the figure above for each image -->
+      <figure>
+        <a href="media/extra_imgs_linear_NCC/additional_2.jpg"><img src="media/extra_imgs_linear_NCC/additional_2.jpg" alt="additional_2 aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_2</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>3, 1</dd>
+            <dt>R offset (y, x)</dt><dd>12, 3</dd>
+            <dt>G loss</dt><dd>0.9875</dd>
+            <dt>R loss</dt><dd>0.9837</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/extra_imgs_linear_NCC/additional_3.jpg"><img src="media/extra_imgs_linear_NCC/additional_3.jpg" alt="additional_3 aligned with linear search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_3</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 0</dd>
+            <dt>R offset (y, x)</dt><dd>17, -1</dd>
+            <dt>G loss</dt><dd>0.9835</dd>
+            <dt>R loss</dt><dd>0.9786</dd>
+          </dl>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
   <section id="extra_imgs_pyramid_L2">
-    <h2>Multi-scale pyramid alignment with L2: additional images</h2>
-    <p>Describe what this run does and what to look for in the results. Note any images that failed or were skipped, and why.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>G offset (y, x)</th>
-            <th>R offset (y, x)</th>
-            <th>G loss</th>
-            <th>R loss</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IMAGE_NAME</td>
-            <td>y, x</td>
-            <td>y, x</td>
-            <td>0.0</td>
-            <td>0.0</td>
-          </tr>
-          <!-- copy the row above for each image -->
-        </tbody>
-      </table>
-    </div>
+    <h2>Multi-Scale Pyramid Alignment with L2: Additional Images</h2>
+    <p></p>
 
     <div class="gallery">
       <figure>
-        <a href="media/extra_imgs_pyramid_L2/IMAGE_NAME.jpg"><img src="media/extra_imgs_pyramid_L2/IMAGE_NAME.jpg" alt="IMAGE_NAME aligned with pyramid search using L2" loading="lazy"></a>
-        <figcaption>IMAGE_NAME</figcaption>
+        <a href="media/extra_imgs_pyramid_L2/additional_1.jpg"><img src="media/extra_imgs_pyramid_L2/additional_1.jpg" alt="additional_1 aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_1</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>2, -1</dd>
+            <dt>R offset (y, x)</dt><dd>10, -2</dd>
+            <dt>G loss</dt><dd>9,287.7</dd>
+            <dt>R loss</dt><dd>14,550.5</dd>
+          </dl>
+        </figcaption>
       </figure>
-      <!-- copy the figure above for each image -->
+      <figure>
+        <a href="media/extra_imgs_pyramid_L2/additional_2.jpg"><img src="media/extra_imgs_pyramid_L2/additional_2.jpg" alt="additional_2 aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_2</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>3, 1</dd>
+            <dt>R offset (y, x)</dt><dd>12, 3</dd>
+            <dt>G loss</dt><dd>8,063.0</dd>
+            <dt>R loss</dt><dd>10,061.4</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/extra_imgs_pyramid_L2/additional_3.jpg"><img src="media/extra_imgs_pyramid_L2/additional_3.jpg" alt="additional_3 aligned with pyramid search using L2" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_3</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 0</dd>
+            <dt>R offset (y, x)</dt><dd>17, -1</dd>
+            <dt>G loss</dt><dd>12,846.7</dd>
+            <dt>R loss</dt><dd>13,921.4</dd>
+          </dl>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
   <section id="extra_imgs_pyramid_NCC">
-    <h2>Multi-scale pyramid alignment with NCC: additional images</h2>
-    <p>Describe what this run does and what to look for in the results. Note any images that failed or were skipped, and why.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>G offset (y, x)</th>
-            <th>R offset (y, x)</th>
-            <th>G loss</th>
-            <th>R loss</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IMAGE_NAME</td>
-            <td>y, x</td>
-            <td>y, x</td>
-            <td>0.0</td>
-            <td>0.0</td>
-          </tr>
-          <!-- copy the row above for each image -->
-        </tbody>
-      </table>
-    </div>
+    <h2>Multi-Scale Pyramid Alignment with NCC: Additional Images</h2>
+    <p>.</p>
 
     <div class="gallery">
       <figure>
-        <a href="media/extra_imgs_pyramid_NCC/IMAGE_NAME.jpg"><img src="media/extra_imgs_pyramid_NCC/IMAGE_NAME.jpg" alt="IMAGE_NAME aligned with pyramid search using NCC" loading="lazy"></a>
-        <figcaption>IMAGE_NAME</figcaption>
+        <a href="media/extra_imgs_pyramid_NCC/additional_1.jpg"><img src="media/extra_imgs_pyramid_NCC/additional_1.jpg" alt="additional_1 aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_1</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>2, -1</dd>
+            <dt>R offset (y, x)</dt><dd>10, -2</dd>
+            <dt>G loss</dt><dd>0.9890</dd>
+            <dt>R loss</dt><dd>0.9766</dd>
+          </dl>
+        </figcaption>
       </figure>
-      <!-- copy the figure above for each image -->
+      <figure>
+        <a href="media/extra_imgs_pyramid_NCC/additional_2.jpg"><img src="media/extra_imgs_pyramid_NCC/additional_2.jpg" alt="additional_2 aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_2</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>3, 1</dd>
+            <dt>R offset (y, x)</dt><dd>12, 3</dd>
+            <dt>G loss</dt><dd>0.9875</dd>
+            <dt>R loss</dt><dd>0.9837</dd>
+          </dl>
+        </figcaption>
+      </figure>
+      <figure>
+        <a href="media/extra_imgs_pyramid_NCC/additional_3.jpg"><img src="media/extra_imgs_pyramid_NCC/additional_3.jpg" alt="additional_3 aligned with pyramid search using NCC" loading="lazy"></a>
+        <figcaption>
+          <span class="img-name">additional_3</span>
+          <dl class="stats">
+            <dt>G offset (y, x)</dt><dd>6, 0</dd>
+            <dt>R offset (y, x)</dt><dd>17, -1</dd>
+            <dt>G loss</dt><dd>0.9835</dd>
+            <dt>R loss</dt><dd>0.9786</dd>
+          </dl>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="canny">
+    <h2>Border Detection with Canny Edges</h2>
+    <p>The plates have black, white and grey borders, plus thin divider strips between the three exposures. These do not line up between channels, so they show up as colored fringes and can throw off the alignment metric. To find where the real image starts, each channel is lightly blurred and run through Canny edge detection, which marks strong intensity changes as edge pixels.</p>
+    <p>A border is a long, nearly straight line, so instead of tracing lines we count, for every column and every row, the fraction of pixels marked as edges. Borders span almost the whole height or width, so they score far higher than scene edges like a horizon. The edges are dilated along one direction so slightly ragged borders still stack into a single row or column. We only search a band near each side, keep the rows and columns above a threshold, and take the innermost one on each side as the start of the actual image. The function returns the crop bounds, and the detected lines are drawn over the image so they can be checked by eye.</p>
+    <div class="arrow-pair">
+      <figure>
+        <a href="media/canny_lines.png"><img src="media/canny_lines.png" alt="Channel with the detected border lines drawn on it" loading="lazy"></a>
+        <figcaption>Detecting possible border lines</figcaption>
+      </figure>
+      <svg class="arrow" viewBox="0 0 48 24" aria-hidden="true" focusable="false">
+        <path d="M2 12 H40 M30 3 L42 12 L30 21" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <figure>
+        <a href="media/train_cropped.png"><img src="media/train_cropped.png" alt="Channel cropped to the detected borders" loading="lazy"></a>
+        <figcaption>Channel cropped to the detected borders</figcaption>
+      </figure>
+    </div>
+    <div class="compare">
+      <figure>
+        <a href="media/train_before.png"><img src="media/train_before.png" alt="Before cropping" loading="lazy"></a>
+        <figcaption>Before cropping</figcaption>
+      </figure>
+      <figure>
+        <a href="media/canny_after.png"><img src="media/canny_after.png" alt="After cropping to the detected borders" loading="lazy"></a>
+        <figcaption>After cropping to the detected borders</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="contrast">
+    <h2>Contrast Stretching</h2>
+    <p>After alignment the image often uses only part of the available brightness range, so it looks flat. Contrast stretching rescales the intensities so that a dark value maps to 0 and a bright value maps to 1. We use the 1st and 99th percentiles instead of the true minimum and maximum so a few specks or dead pixels cannot set the range, and one shared range for all three channels so the color balance is not changed.</p>
+    <div class="eq-box">
+      <math display="block"><mrow><mi>out</mi><mo>=</mo><mi>clip</mi><mo>(</mo><mfrac><mrow><mi>x</mi><mo>&#x2212;</mo><msub><mi>p</mi><mtext>lo</mtext></msub></mrow><mrow><msub><mi>p</mi><mtext>hi</mtext></msub><mo>&#x2212;</mo><msub><mi>p</mi><mtext>lo</mtext></msub></mrow></mfrac><mo>,</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>)</mo></mrow></math>
+    </div>
+    <p class="eq-note">Here <i>x</i> is a pixel value, and <i>p</i><sub>lo</sub> and <i>p</i><sub>hi</sub> are the 1st and 99th percentiles of all pixel values across the three channels.</p>
+    <div class="compare">
+      <figure>
+        <a href="media/contrast_before.png"><img src="media/contrast_before.png" alt="Before contrast stretching" loading="lazy"></a>
+        <figcaption>Before contrast stretching</figcaption>
+      </figure>
+      <figure>
+        <a href="media/contrast_after.png"><img src="media/contrast_after.png" alt="After contrast stretching" loading="lazy"></a>
+        <figcaption>After contrast stretching</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="white_balance">
+    <h2>White Balance</h2>
+    <p>The plates were not exposed under a neutral light, so the combined image can have an overall color tint. We use the gray world assumption: averaged over a whole scene, colors should come out neutral gray, so any leftover tint is treated as the illuminant and divided out. Each channel is multiplied by a gain that moves its mean to the average of all three channel means. Near-black and near-white pixels are left out of the means because they carry little color information.</p>
+    <div class="eq-box">
+      <math display="block"><mrow><msub><mi>m</mi><mtext>avg</mtext></msub><mo>=</mo><mfrac><mrow><msub><mi>m</mi><mi>B</mi></msub><mo>+</mo><msub><mi>m</mi><mi>G</mi></msub><mo>+</mo><msub><mi>m</mi><mi>R</mi></msub></mrow><mrow><mn>3</mn></mrow></mfrac></mrow></math>
+      <math display="block"><mrow><msub><mi>gain</mi><mi>c</mi></msub><mo>=</mo><mfrac><mrow><msub><mi>m</mi><mtext>avg</mtext></msub></mrow><mrow><msub><mi>m</mi><mi>c</mi></msub></mrow></mfrac></mrow></math>
+      <math display="block"><mrow><msub><mi>out</mi><mi>c</mi></msub><mo>=</mo><mi>clip</mi><mo>(</mo><msub><mi>gain</mi><mi>c</mi></msub><mo>&#x22C5;</mo><msub><mi>in</mi><mi>c</mi></msub><mo>,</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>)</mo></mrow></math>
+    </div>
+    <p class="eq-note">Here <i>m</i><sub><i>c</i></sub> is the mean of channel <i>c</i> (B, G or R) over the pixels that are neither near-black nor near-white.</p>
+    <div class="compare">
+      <figure>
+        <a href="media/wb_before.png"><img src="media/wb_before.png" alt="Before white balance" loading="lazy"></a>
+        <figcaption>Before white balance</figcaption>
+      </figure>
+      <figure>
+        <a href="media/wb_after.png"><img src="media/wb_after.png" alt="After white balance" loading="lazy"></a>
+        <figcaption>After white balance</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="saturation">
+    <h2>Saturation Boosting</h2>
+    <p>The three plates are exposures through different color filters, so the differences between channels in the stacked image can be small, and colors can look muted. Saturation boosting pushes each pixel away from its own gray value (the mean of its three channels) by a factor <i>s</i>, which amplifies those color differences. Neutral pixels do not change. We use s = 1.5 for every image. This cannot fix a wrong hue, it only strengthens the color that is already there, and a very large <i>s</i> amplifies noise and edge fringes.</p>
+    <div class="eq-box">
+      <math display="block"><mrow><mi>gray</mi><mo>=</mo><mfrac><mrow><msub><mi>in</mi><mi>B</mi></msub><mo>+</mo><msub><mi>in</mi><mi>G</mi></msub><mo>+</mo><msub><mi>in</mi><mi>R</mi></msub></mrow><mrow><mn>3</mn></mrow></mfrac></mrow></math>
+      <math display="block"><mrow><msub><mi>out</mi><mi>c</mi></msub><mo>=</mo><mi>gray</mi><mo>+</mo><mi>s</mi><mo>(</mo><msub><mi>in</mi><mi>c</mi></msub><mo>&#x2212;</mo><mi>gray</mi><mo>)</mo></mrow></math>
+    </div>
+    <p class="eq-note">An <i>s</i> of 1 leaves the image unchanged, and values above 1 increase the saturation.</p>
+    <div class="compare">
+      <figure>
+        <a href="media/sat_before.png"><img src="media/sat_before.png" alt="Before saturation boost" loading="lazy"></a>
+        <figcaption>Before saturation boost</figcaption>
+      </figure>
+      <figure>
+        <a href="media/sat_after.png"><img src="media/sat_after.png" alt="After saturation boost" loading="lazy"></a>
+        <figcaption>After saturation boost</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="cropping">
+    <h2>Cropping the Edge Artifacts</h2>
+    <p>Shifting the G and R channels to line up with B leaves strips along the edges where a channel has no data, and near the plate frame the three exposures disagree, which produces bands of odd colors. To remove them, each side is cropped by the largest shift in that direction, plus a small extra margin, a fraction of the image size, that also removes the colored fringes from the plate frame.</p>
+    <div class="eq-box">
+      <math display="block"><mrow><msub><mi>y</mi><mn>0</mn></msub><mo>=</mo><mi>max</mi><mo>(</mo><mn>0</mn><mo>,</mo><msub><mrow><mo>&#x394;</mo><mi>y</mi></mrow><mi>G</mi></msub><mo>,</mo><msub><mrow><mo>&#x394;</mo><mi>y</mi></mrow><mi>R</mi></msub><mo>)</mo><mo>+</mo><msub><mi>p</mi><mi>y</mi></msub></mrow></math>
+      <math display="block"><mrow><msub><mi>y</mi><mn>1</mn></msub><mo>=</mo><mi>H</mi><mo>+</mo><mi>min</mi><mo>(</mo><mn>0</mn><mo>,</mo><msub><mrow><mo>&#x394;</mo><mi>y</mi></mrow><mi>G</mi></msub><mo>,</mo><msub><mrow><mo>&#x394;</mo><mi>y</mi></mrow><mi>R</mi></msub><mo>)</mo><mo>&#x2212;</mo><msub><mi>p</mi><mi>y</mi></msub></mrow></math>
+      <math display="block"><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mi>max</mi><mo>(</mo><mn>0</mn><mo>,</mo><msub><mrow><mo>&#x394;</mo><mi>x</mi></mrow><mi>G</mi></msub><mo>,</mo><msub><mrow><mo>&#x394;</mo><mi>x</mi></mrow><mi>R</mi></msub><mo>)</mo><mo>+</mo><msub><mi>p</mi><mi>x</mi></msub></mrow></math>
+      <math display="block"><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mi>W</mi><mo>+</mo><mi>min</mi><mo>(</mo><mn>0</mn><mo>,</mo><msub><mrow><mo>&#x394;</mo><mi>x</mi></mrow><mi>G</mi></msub><mo>,</mo><msub><mrow><mo>&#x394;</mo><mi>x</mi></mrow><mi>R</mi></msub><mo>)</mo><mo>&#x2212;</mo><msub><mi>p</mi><mi>x</mi></msub></mrow></math>
+    </div>
+    <p class="eq-note">Here (&Delta;<i>y</i><sub>G</sub>, &Delta;<i>x</i><sub>G</sub>) and (&Delta;<i>y</i><sub>R</sub>, &Delta;<i>x</i><sub>R</sub>) are the offsets found for the G and R channels, <i>H</i> and <i>W</i> are the image height and width, and the extra margins are <i>p</i><sub><i>y</i></sub> = &#x230A;<i>fH</i>&#x230B; and <i>p</i><sub><i>x</i></sub> = &#x230A;<i>fW</i>&#x230B; with <i>f</i> = 0.05. The final image is the region from row <i>y</i><sub>0</sub> to <i>y</i><sub>1</sub> and column <i>x</i><sub>0</sub> to <i>x</i><sub>1</sub>.</p>
+    <div class="compare">
+      <figure>
+        <a href="media/crop_before.png"><img src="media/crop_before.png" alt="Before cropping" loading="lazy"></a>
+        <figcaption>Before cropping</figcaption>
+      </figure>
+      <figure>
+        <a href="media/crop_after.png"><img src="media/crop_after.png" alt="After cropping" loading="lazy"></a>
+        <figcaption>After cropping</figcaption>
+      </figure>
     </div>
   </section>
 
