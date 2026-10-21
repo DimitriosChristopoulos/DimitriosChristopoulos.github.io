@@ -1,0 +1,3 @@
+Low-frequency sigma: 3
+High-frequency sigma: 9
+Gaussian kernel size: 13 x 13
